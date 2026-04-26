@@ -1,0 +1,5 @@
+- key: velociraptor.velociraptor_logs
+  title: Velociraptor Logs
+  description: >
+    Fields for Velociraptor server process logs (logs/ directory).
+  fields: []

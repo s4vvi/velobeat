@@ -1,0 +1,28 @@
+== Velociraptor Module
+
+The `velociraptor` module parses logs produced by the
+https://www.velocidex.com[Velociraptor] DFIR platform.
+
+[float]
+=== Filesets
+
+[float]
+==== `velociraptor_logs`
+
+Parses Velociraptor server process logs from the `logs/` directory.
+Each log file is a newline-delimited JSON stream. The active log file for each
+component ends with a `.log` extension (a symlink to the latest rotated file).
+
+[float]
+==== `velociraptor_server_artifacts`
+
+Parses server artifact execution *results* stored in the `server_artifacts/`
+directory. Results are organised as
+`<artifact_name>/<YYYY-MM-DD>.json` (with an optional source sub-directory for
+multi-source artifacts such as `Server.Monitor.Health/Prometheus`).
+
+[float]
+==== `velociraptor_server_artifacts_logs`
+
+Parses server artifact execution *logs* stored in the `server_artifact_logs/`
+directory, following the same directory layout as `velociraptor_server_artifacts`.

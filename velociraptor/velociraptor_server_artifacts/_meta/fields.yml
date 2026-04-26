@@ -1,0 +1,90 @@
+- key: velociraptor.velociraptor_server_artifacts
+  title: Velociraptor Server Artifact Results
+  description: >
+    Fields for Velociraptor server artifact execution results (server_artifacts/ directory).
+    Each artifact type produces different fields; only universally-present fields are
+    documented here. Artifact-specific fields appear at the document root.
+  fields:
+    - name: operation
+      type: keyword
+      description: >
+        Audit operation type present in Server.Audit.Logs records
+        (e.g. ScheduleFlow, CreateHunt, ModifyHunt, hunt_delete, user_grant,
+        SetServerMonitoringState). Mapped to event.action by the pipeline.
+
+    - name: principal
+      type: keyword
+      description: >
+        User or service principal that performed the operation in Server.Audit.Logs
+        records. Mapped to user.name by the pipeline.
+
+    - name: details
+      type: object
+      description: >
+        Structured details of the audited operation (present in Server.Audit.Logs records).
+
+    - name: setter
+      type: keyword
+      description: >
+        Identity that set or modified an artifact definition
+        (Server.Internal.ArtifactModification records).
+
+    - name: artifact
+      type: keyword
+      description: >
+        Name of the artifact that was modified
+        (Server.Internal.ArtifactModification records).
+
+    - name: op
+      type: keyword
+      description: >
+        Modification operation on an artifact definition
+        (Server.Internal.ArtifactModification records, e.g. "set").
+
+    - name: definition
+      type: text
+      description: >
+        Full YAML artifact definition text
+        (Server.Internal.ArtifactModification records).
+
+    - name: Timestamp
+      type: long
+      description: >
+        Unix epoch timestamp (seconds) present in some artifact results
+        such as System.Hunt.Creation records.
+
+    - name: Hunt
+      type: object
+      description: >
+        Hunt metadata object present in System.Hunt.Creation records.
+
+    - name: TotalFrontends
+      type: long
+      description: >
+        Total number of frontends (Server.Monitor.Health/Prometheus records).
+
+    - name: CPUPercent
+      type: float
+      description: >
+        Server CPU usage percentage (Server.Monitor.Health/Prometheus records).
+
+    - name: MemoryUse
+      type: long
+      description: >
+        Server memory usage in bytes (Server.Monitor.Health/Prometheus records).
+
+    - name: client_comms_current_connections
+      type: long
+      description: >
+        Number of active client connections to the frontend
+        (Server.Monitor.Health/Prometheus records).
+
+    - name: StatusCode
+      type: long
+      description: >
+        HTTP status code of an upstream request (e.g. AWX.Flows.Upload records).
+
+    - name: Errored
+      type: boolean
+      description: >
+        Whether the upstream request returned errors (e.g. AWX.Flows.Upload records).

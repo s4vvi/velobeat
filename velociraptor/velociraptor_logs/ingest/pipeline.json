@@ -1,0 +1,73 @@
+{
+  "description": "Pipeline for Velociraptor server process logs (logs/ directory).",
+  "processors": [
+    {
+      "date": {
+        "field": "time",
+        "target_field": "@timestamp",
+        "formats": ["ISO8601"],
+        "ignore_failure": true
+      }
+    },
+    {
+      "remove": {
+        "field": "time",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "level",
+        "target_field": "log.level",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "msg",
+        "target_field": "message",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "velociraptor",
+        "override": false
+      }
+    },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "velociraptor.velociraptor_logs",
+        "override": false
+      }
+    },
+    {
+      "set": {
+        "field": "event.kind",
+        "value": "event"
+      }
+    }
+  ],
+  "on_failure": [
+    {
+      "append": {
+        "field": "error.message",
+        "value": "velociraptor.velociraptor_logs pipeline error: {{_ingest.on_failure_message}}"
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "velociraptor"
+      }
+    },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "velociraptor.velociraptor_logs"
+      }
+    }
+  ]
+}

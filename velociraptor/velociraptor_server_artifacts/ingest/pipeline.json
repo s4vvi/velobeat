@@ -1,0 +1,77 @@
+{
+  "description": "Pipeline for Velociraptor server artifact results (server_artifacts/ directory).",
+  "processors": [
+    {
+      "date": {
+        "field": "_ts",
+        "target_field": "@timestamp",
+        "formats": ["UNIX"],
+        "ignore_failure": true
+      }
+    },
+    {
+      "remove": {
+        "field": "_ts",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set": {
+        "field": "event.action",
+        "copy_from": "operation",
+        "override": false,
+        "ignore_empty_value": true,
+        "ignore_failure": true
+      }
+    },
+    {
+      "set": {
+        "field": "user.name",
+        "copy_from": "principal",
+        "override": false,
+        "ignore_empty_value": true,
+        "ignore_failure": true
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "velociraptor",
+        "override": false
+      }
+    },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "velociraptor.velociraptor_server_artifacts",
+        "override": false
+      }
+    },
+    {
+      "set": {
+        "field": "event.kind",
+        "value": "event"
+      }
+    }
+  ],
+  "on_failure": [
+    {
+      "append": {
+        "field": "error.message",
+        "value": "velociraptor.velociraptor_server_artifacts pipeline error: {{_ingest.on_failure_message}}"
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "velociraptor"
+      }
+    },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "velociraptor.velociraptor_server_artifacts"
+      }
+    }
+  ]
+}

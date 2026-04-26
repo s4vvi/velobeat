@@ -1,0 +1,87 @@
+{
+  "description": "Pipeline for Velociraptor server artifact execution logs (server_artifact_logs/ directory).",
+  "processors": [
+    {
+      "gsub": {
+        "field": "Timestamp",
+        "pattern": " [A-Z]+$",
+        "replacement": "",
+        "ignore_missing": true
+      }
+    },
+    {
+      "date": {
+        "field": "Timestamp",
+        "target_field": "@timestamp",
+        "formats": ["yyyy-MM-dd HH:mm:ss.SSSSSSSSS Z"],
+        "ignore_failure": true
+      }
+    },
+    {
+      "remove": {
+        "field": "Timestamp",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "Level",
+        "target_field": "log.level",
+        "ignore_missing": true
+      }
+    },
+    {
+      "lowercase": {
+        "field": "log.level",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "Message",
+        "target_field": "message",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "velociraptor",
+        "override": false
+      }
+    },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "velociraptor.velociraptor_server_artifacts_logs",
+        "override": false
+      }
+    },
+    {
+      "set": {
+        "field": "event.kind",
+        "value": "event"
+      }
+    }
+  ],
+  "on_failure": [
+    {
+      "append": {
+        "field": "error.message",
+        "value": "velociraptor.velociraptor_server_artifacts_logs pipeline error: {{_ingest.on_failure_message}}"
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "velociraptor"
+      }
+    },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "velociraptor.velociraptor_server_artifacts_logs"
+      }
+    }
+  ]
+}

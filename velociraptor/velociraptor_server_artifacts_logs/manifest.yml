@@ -1,0 +1,9 @@
+module_version: "1.0"
+
+var:
+  - name: paths
+    default:
+      - /opt/velociraptor/server_artifact_logs/**/*.json
+
+ingest_pipeline: ingest/pipeline.json
+input: config/velociraptor_server_artifacts_logs.yml

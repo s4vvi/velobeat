@@ -1,0 +1,44 @@
+- key: velociraptor
+  title: Velociraptor
+  description: >
+    Fields from the Velociraptor DFIR platform.
+  fields:
+    - name: velociraptor
+      type: group
+      description: Velociraptor-specific fields.
+      fields:
+        - name: server_artifacts
+          type: group
+          description: >
+            Fields for the velociraptor_server_artifacts fileset.
+            Additional fields depend on the specific artifact.
+          fields:
+            - name: operation
+              type: keyword
+              description: >
+                Audit operation type (present in Server.Audit.Logs records,
+                e.g. ScheduleFlow, CreateHunt, ModifyHunt, user_grant).
+
+            - name: principal
+              type: keyword
+              description: >
+                User or service principal that performed the operation
+                (present in Server.Audit.Logs records).
+
+            - name: setter
+              type: keyword
+              description: >
+                Identity that set or modified an artifact definition
+                (present in Server.Internal.ArtifactModification records).
+
+            - name: artifact_name
+              type: keyword
+              description: >
+                Name of the artifact that was modified
+                (present in Server.Internal.ArtifactModification records).
+
+            - name: op
+              type: keyword
+              description: >
+                Modification operation on the artifact definition ("set", "delete",
+                etc.; present in Server.Internal.ArtifactModification records).

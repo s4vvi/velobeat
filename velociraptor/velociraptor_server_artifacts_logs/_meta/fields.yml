@@ -1,0 +1,5 @@
+- key: velociraptor.velociraptor_server_artifacts_logs
+  title: Velociraptor Server Artifact Execution Logs
+  description: >
+    Fields for Velociraptor server artifact execution logs (server_artifact_logs/ directory).
+  fields: []

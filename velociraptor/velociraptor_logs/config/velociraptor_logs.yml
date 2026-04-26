@@ -1,0 +1,15 @@
+type: log
+paths:
+{{ range $i, $path := .paths }}
+ - {{$path}}
+{{ end }}
+encoding: utf-8
+
+json.keys_under_root: true
+json.add_error_key: true
+json.overwrite_keys: true
+
+fields_under_root: true
+fields:
+  event.module: velociraptor
+  event.dataset: velociraptor.velociraptor_logs

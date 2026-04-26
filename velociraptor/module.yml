@@ -1,0 +1,7 @@
+- module: velociraptor
+  title: Velociraptor
+  release: experimental
+  description: >
+    Module for ingesting logs from the Velociraptor Digital Forensics and
+    Incident Response (DFIR) platform. Covers server process logs, server
+    artifact execution results, and server artifact execution logs.
